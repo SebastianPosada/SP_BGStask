@@ -1,7 +1,6 @@
 # Visual Studio 2015 user specific files
 .vs/
-.vsconfig/
-.vsconfig/*
+
 
 # Compiled Object files
 *.slo
@@ -86,6 +85,9 @@ Plugins/Developer/RiderLink/*
 <<<<<<< Updated upstream
 .idea/*
 .vs/*
+.vsconfig
+.vsconfig/
+.vsconfig/*
 
 Plugins/Developers/*
 =======
