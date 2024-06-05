@@ -8,6 +8,8 @@
 
 // Sets default values
 ASP_Character::ASP_Character()
+
+
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -16,12 +18,15 @@ ASP_Character::ASP_Character()
 	SpringArmComp -> bUsePawnControlRotation = true;
 	SpringArmComp -> SetupAttachment(RootComponent);
 
+	SkateBoardMesh = CreateDefaultSubobject<UStaticMeshComponent>("SkateBoardMesh");
+	SkateBoardMesh -> SetupAttachment(ASP_Character::GetMesh());
+
 	CameraComp = CreateDefaultSubobject<UCameraComponent>("CameraComp");
 	CameraComp -> SetupAttachment(SpringArmComp);
 
 	GetCharacterMovement() -> bOrientRotationToMovement = true;
 
-	//bUseControllerRotationYaw = false;
+	bUseControllerRotationYaw = false;
 }
 
 // Called to bind functionality to input
