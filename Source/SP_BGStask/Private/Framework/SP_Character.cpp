@@ -114,13 +114,13 @@ void ASP_Character::TogglePause()
 
 void ASP_Character::ToggleSprintOn()
 {
-	GetCharacterMovement() -> MaxWalkSpeed = 1800.0f;
+	GetCharacterMovement() -> MaxWalkSpeed = 2100.0f;
 	PlayCustomAnimationMontage(SprintMontage, true);
 }
 
 void ASP_Character::ToggleSprintOff()
 {
-	GetCharacterMovement() -> MaxWalkSpeed = 600.0f;
+	GetCharacterMovement() -> MaxWalkSpeed = 1200.0f;
 	PlayCustomAnimationMontage(SprintMontage, false);
 }
 
