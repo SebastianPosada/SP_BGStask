@@ -27,6 +27,8 @@ ASP_Character::ASP_Character()
 	SkateBoardMesh = CreateDefaultSubobject<UStaticMeshComponent>("SkateBoardMesh");
 	SkateBoardMesh -> SetupAttachment(ASP_Character::GetMesh());
 
+	AttributeComp = CreateDefaultSubobject<USP_AttributeComponent>("AttributeComp");
+
 	GetCharacterMovement() -> bOrientRotationToMovement = true;
 
 	bUseControllerRotationYaw = false;
@@ -71,6 +73,11 @@ void ASP_Character::BeginPlay()
 	Super::BeginPlay();
 }
 
+void ASP_Character::OnScoreChanged(AActor* InstigatorActor, USP_AttributeComponent* OwningComp, float NewScore,
+	float Delta)
+{
+}
+
 void ASP_Character::Move(const FInputActionValue& Value)
 {
 	// gets the control rotation and sets pitch and roll to 0
@@ -107,24 +114,12 @@ void ASP_Character::TogglePause()
 
 void ASP_Character::ToggleSprintOn()
 {
-	if(CameraFOVTimerHandle.IsValid())
-	{
-		CameraFOVTimerHandle.Invalidate();
-	}
-
-	GetWorld()->GetTimerManager().SetTimer(CameraFOVTimerHandle, this, &ASP_Character::ChangeFOV, 0.01f,false);
 	GetCharacterMovement() -> MaxWalkSpeed = 1800.0f;
 	PlayCustomAnimationMontage(SprintMontage, true);
 }
 
 void ASP_Character::ToggleSprintOff()
 {
-	if(CameraFOVTimerHandle.IsValid())
-	{
-		CameraFOVTimerHandle.Invalidate();
-	}
-	
-	GetWorld()->GetTimerManager().SetTimer(CameraFOVTimerHandle, this, &ASP_Character::ChangeFOV, 0.01f,false);
 	GetCharacterMovement() -> MaxWalkSpeed = 600.0f;
 	PlayCustomAnimationMontage(SprintMontage, false);
 }
@@ -147,27 +142,6 @@ void ASP_Character::PlayCustomAnimationMontage(UAnimMontage* AnimMontage, bool b
 			AnimInstance->Montage_Stop(.5, AnimMontage);
 		}
 	}
-}
-
-void ASP_Character::ChangeFOV()
-{
-	float TargetFOV;
-	
-	if(bIsSprintActive)
-	{
-		TargetFOV = 90.0f;
-		bIsSprintActive = false;
-	}
-	else
-	{
-		TargetFOV = 120.0f;
-		bIsSprintActive = true;
-	}
-	
-	float InterpSpeed = 1.0f;
-	float CurrentFOV = CameraComp->FieldOfView;
-	float NewFOV = FMath::FInterpTo(CurrentFOV, TargetFOV, 0.01, InterpSpeed);
-	CameraComp->SetFieldOfView(NewFOV);
 }
 
 // Called every frame

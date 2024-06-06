@@ -7,6 +7,7 @@
 #include "GameFramework/Character.h"
 #include "Camera/CameraComponent.h"
 #include "Animation/AnimInstance.h"
+#include "Components/SP_AttributeComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "SP_Character.generated.h"
 
@@ -28,6 +29,10 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	
+	UFUNCTION()
+	void OnScoreChanged(AActor* InstigatorActor, USP_AttributeComponent* OwningComp, float NewScore, float Delta);
+	
 
 	/*Animations and Montages*/
 
@@ -41,7 +46,7 @@ protected:
 	
 	/*CAMERA COMPONENTS*/
 	
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TObjectPtr<UCameraComponent> CameraComp;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -84,12 +89,12 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	void PlayCustomAnimationMontage(UAnimMontage* AnimMontage, bool bMontagePlaying);
 
-	void ChangeFOV();
-
 	bool bIsSprintActive = false;
 
-	FTimerHandle CameraFOVTimerHandle;
-
+	/*ACTOR COMPONENTS*/
+	UPROPERTY(VisibleAnywhere)
+	USP_AttributeComponent* AttributeComp;
+	
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
