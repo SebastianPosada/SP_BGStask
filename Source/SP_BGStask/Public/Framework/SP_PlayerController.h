@@ -13,5 +13,18 @@ UCLASS()
 class SP_BGSTASK_API ASP_PlayerController : public APlayerController
 {
 	GENERATED_BODY()
+
+public:
+	UFUNCTION(BlueprintCallable, Category = "GamePlay")
+	void TogglePause();
+	
+protected:
+
+	/*Pause Menu Widget Reference*/
+	UPROPERTY(EditDefaultsOnly, Category = "UI")
+	TSubclassOf<UUserWidget> PauseMenuClass;
+
+	UPROPERTY()
+	UUserWidget* PauseMenuInstance;
 	
 };

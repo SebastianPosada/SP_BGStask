@@ -13,5 +13,9 @@ UCLASS()
 class SP_BGSTASK_API USP_GameInstance : public UGameInstance
 {
 	GENERATED_BODY()
-	
+
+public:
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool bIsFirstTime = true;
 };

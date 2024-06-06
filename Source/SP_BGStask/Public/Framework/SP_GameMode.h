@@ -13,5 +13,9 @@ UCLASS()
 class SP_BGSTASK_API ASP_GameMode : public AGameModeBase
 {
 	GENERATED_BODY()
-	
+
+public:
+
+	UFUNCTION(BlueprintCallable, Category = "A_GameplayFunctionalities")
+	void PauseGame(bool SetPauseGame);
 };

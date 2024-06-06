@@ -6,6 +6,7 @@
 #include "InputActionValue.h"
 #include "GameFramework/Character.h"
 #include "Camera/CameraComponent.h"
+#include "Animation/AnimInstance.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "SP_Character.generated.h"
 
@@ -28,8 +29,13 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	/*Skateboard Mesh Comp*/
+	/*Animations and Montages*/
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<UAnimMontage> SprintMontage;	
+	
+	/*Skateboard Mesh Comp*/
+	
 	UPROPERTY(Category=Character, VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
 	TObjectPtr<UStaticMeshComponent> SkateBoardMesh;
 	
@@ -55,10 +61,34 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "A_Input")
 	TObjectPtr<UInputAction> Input_LookMouse;
 
+	UPROPERTY(EditAnywhere, Category = "A_Input")
+	TObjectPtr<UInputAction> Input_Pause;
+
+	UPROPERTY(EditAnywhere, Category = "A_Input")
+	TObjectPtr<UInputAction> Input_Sprint;
+	
 	/*Movement*/
 
 	void Move(const FInputActionValue& Value);
 	void LookMouse(const FInputActionValue& Value);
+
+	UFUNCTION(BlueprintCallable)
+	void TogglePause();
+
+	UFUNCTION(BlueprintCallable)
+	void ToggleSprintOn();
+
+	UFUNCTION(BlueprintCallable)
+	void ToggleSprintOff();
+
+	UFUNCTION(BlueprintCallable)
+	void PlayCustomAnimationMontage(UAnimMontage* AnimMontage, bool bMontagePlaying);
+
+	void ChangeFOV();
+
+	bool bIsSprintActive = false;
+
+	FTimerHandle CameraFOVTimerHandle;
 
 public:	
 	// Called every frame
